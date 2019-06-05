@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyc.transactionpropagate.dao.AccCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.zyc.transactionpropagate.model.AccCode" >
+    <id column="f_id" property="fId" jdbcType="INTEGER" />
+    <result column="f_accounting_code" property="fAccountingCode" jdbcType="CHAR" />
+    <result column="f_accounting_code_name" property="fAccountingCodeName" jdbcType="VARCHAR" />
+    <result column="f_description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="f_created_time" property="fCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="f_modified_time" property="fModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    f_id, f_accounting_code, f_accounting_code_name, f_description, f_created_time, f_modified_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyc.transactionpropagate.model.AccCodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_acc_accounting_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_acc_accounting_code
+    where f_id = #{fId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_acc_accounting_code
+    where f_id = #{fId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyc.transactionpropagate.model.AccCodeExample" >
+    delete from t_acc_accounting_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyc.transactionpropagate.model.AccCode" >
+    insert into t_acc_accounting_code (f_id, f_accounting_code, f_accounting_code_name, 
+      f_description, f_created_time, f_modified_time
+      )
+    values (#{fId,jdbcType=INTEGER}, #{fAccountingCode,jdbcType=CHAR}, #{fAccountingCodeName,jdbcType=VARCHAR}, 
+      #{fDescription,jdbcType=VARCHAR}, #{fCreatedTime,jdbcType=TIMESTAMP}, #{fModifiedTime,jdbcType=TIMESTAMP}
+      )
+</insert>
+  <update id="updateGene" >
+    set sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  </update>
+  <insert id="insertGene" >
+    insert into t_acc_accounting_code(f_accounting_code, f_accounting_code_name, f_description)
+	select G as 'f_accounting_code' , E as 'f_accounting_code_name' ,
+	E as 'f_description' from transinfo GROUP BY G;
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyc.transactionpropagate.model.AccCode" >
+    insert into t_acc_accounting_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        f_id,
+      </if>
+      <if test="fAccountingCode != null" >
+        f_accounting_code,
+      </if>
+      <if test="fAccountingCodeName != null" >
+        f_accounting_code_name,
+      </if>
+      <if test="fDescription != null" >
+        f_description,
+      </if>
+      <if test="fCreatedTime != null" >
+        f_created_time,
+      </if>
+      <if test="fModifiedTime != null" >
+        f_modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="fAccountingCode != null" >
+        #{fAccountingCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountingCodeName != null" >
+        #{fAccountingCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="fDescription != null" >
+        #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatedTime != null" >
+        #{fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fModifiedTime != null" >
+        #{fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyc.transactionpropagate.model.AccCodeExample" resultType="java.lang.Integer" >
+    select count(*) from t_acc_accounting_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_acc_accounting_code
+    <set >
+      <if test="record.fId != null" >
+        f_id = #{record.fId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fAccountingCode != null" >
+        f_accounting_code = #{record.fAccountingCode,jdbcType=CHAR},
+      </if>
+      <if test="record.fAccountingCodeName != null" >
+        f_accounting_code_name = #{record.fAccountingCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fDescription != null" >
+        f_description = #{record.fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCreatedTime != null" >
+        f_created_time = #{record.fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fModifiedTime != null" >
+        f_modified_time = #{record.fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_acc_accounting_code
+    set f_id = #{record.fId,jdbcType=INTEGER},
+      f_accounting_code = #{record.fAccountingCode,jdbcType=CHAR},
+      f_accounting_code_name = #{record.fAccountingCodeName,jdbcType=VARCHAR},
+      f_description = #{record.fDescription,jdbcType=VARCHAR},
+      f_created_time = #{record.fCreatedTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{record.fModifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyc.transactionpropagate.model.AccCode" >
+    update t_acc_accounting_code
+    <set >
+      <if test="fAccountingCode != null" >
+        f_accounting_code = #{fAccountingCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountingCodeName != null" >
+        f_accounting_code_name = #{fAccountingCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="fDescription != null" >
+        f_description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatedTime != null" >
+        f_created_time = #{fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fModifiedTime != null" >
+        f_modified_time = #{fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyc.transactionpropagate.model.AccCode" >
+    update t_acc_accounting_code
+    set f_accounting_code = #{fAccountingCode,jdbcType=CHAR},
+      f_accounting_code_name = #{fAccountingCodeName,jdbcType=VARCHAR},
+      f_description = #{fDescription,jdbcType=VARCHAR},
+      f_created_time = #{fCreatedTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{fModifiedTime,jdbcType=TIMESTAMP}
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+</mapper>

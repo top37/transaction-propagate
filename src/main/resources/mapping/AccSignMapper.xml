@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyc.transactionpropagate.dao.AccSignMapper" >
+  <resultMap id="BaseResultMap" type="com.zyc.transactionpropagate.model.AccSign" >
+    <id column="f_id" property="fId" jdbcType="INTEGER" />
+    <result column="f_account_sign_code" property="fAccountSignCode" jdbcType="CHAR" />
+    <result column="f_account_category" property="fAccountCategory" jdbcType="TINYINT" />
+    <result column="f_account_sign_name" property="fAccountSignName" jdbcType="VARCHAR" />
+    <result column="f_description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="f_create_by" property="fCreateBy" jdbcType="VARCHAR" />
+    <result column="f_created_time" property="fCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="f_modified_by" property="fModifiedBy" jdbcType="VARCHAR" />
+    <result column="f_modified_time" property="fModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    f_id, f_account_sign_code, f_account_category, f_account_sign_name, f_description, 
+    f_create_by, f_created_time, f_modified_by, f_modified_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyc.transactionpropagate.model.AccSignExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_acc_account_sign
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_acc_account_sign
+    where f_id = #{fId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_acc_account_sign
+    where f_id = #{fId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyc.transactionpropagate.model.AccSignExample" >
+    delete from t_acc_account_sign
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyc.transactionpropagate.model.AccSign" >
+    insert into t_acc_account_sign (f_id, f_account_sign_code, f_account_category, 
+      f_account_sign_name, f_description, f_create_by, 
+      f_created_time, f_modified_by, f_modified_time
+      )
+    values (#{fId,jdbcType=INTEGER}, #{fAccountSignCode,jdbcType=CHAR}, #{fAccountCategory,jdbcType=TINYINT}, 
+      #{fAccountSignName,jdbcType=VARCHAR}, #{fDescription,jdbcType=VARCHAR}, #{fCreateBy,jdbcType=VARCHAR}, 
+      #{fCreatedTime,jdbcType=TIMESTAMP}, #{fModifiedBy,jdbcType=VARCHAR}, #{fModifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyc.transactionpropagate.model.AccSign" >
+    insert into t_acc_account_sign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        f_id,
+      </if>
+      <if test="fAccountSignCode != null" >
+        f_account_sign_code,
+      </if>
+      <if test="fAccountCategory != null" >
+        f_account_category,
+      </if>
+      <if test="fAccountSignName != null" >
+        f_account_sign_name,
+      </if>
+      <if test="fDescription != null" >
+        f_description,
+      </if>
+      <if test="fCreateBy != null" >
+        f_create_by,
+      </if>
+      <if test="fCreatedTime != null" >
+        f_created_time,
+      </if>
+      <if test="fModifiedBy != null" >
+        f_modified_by,
+      </if>
+      <if test="fModifiedTime != null" >
+        f_modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="fAccountSignCode != null" >
+        #{fAccountSignCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountCategory != null" >
+        #{fAccountCategory,jdbcType=TINYINT},
+      </if>
+      <if test="fAccountSignName != null" >
+        #{fAccountSignName,jdbcType=VARCHAR},
+      </if>
+      <if test="fDescription != null" >
+        #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreateBy != null" >
+        #{fCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatedTime != null" >
+        #{fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fModifiedBy != null" >
+        #{fModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fModifiedTime != null" >
+        #{fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyc.transactionpropagate.model.AccSignExample" resultType="java.lang.Integer" >
+    select count(*) from t_acc_account_sign
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_acc_account_sign
+    <set >
+      <if test="record.fId != null" >
+        f_id = #{record.fId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fAccountSignCode != null" >
+        f_account_sign_code = #{record.fAccountSignCode,jdbcType=CHAR},
+      </if>
+      <if test="record.fAccountCategory != null" >
+        f_account_category = #{record.fAccountCategory,jdbcType=TINYINT},
+      </if>
+      <if test="record.fAccountSignName != null" >
+        f_account_sign_name = #{record.fAccountSignName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fDescription != null" >
+        f_description = #{record.fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCreateBy != null" >
+        f_create_by = #{record.fCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCreatedTime != null" >
+        f_created_time = #{record.fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fModifiedBy != null" >
+        f_modified_by = #{record.fModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fModifiedTime != null" >
+        f_modified_time = #{record.fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_acc_account_sign
+    set f_id = #{record.fId,jdbcType=INTEGER},
+      f_account_sign_code = #{record.fAccountSignCode,jdbcType=CHAR},
+      f_account_category = #{record.fAccountCategory,jdbcType=TINYINT},
+      f_account_sign_name = #{record.fAccountSignName,jdbcType=VARCHAR},
+      f_description = #{record.fDescription,jdbcType=VARCHAR},
+      f_create_by = #{record.fCreateBy,jdbcType=VARCHAR},
+      f_created_time = #{record.fCreatedTime,jdbcType=TIMESTAMP},
+      f_modified_by = #{record.fModifiedBy,jdbcType=VARCHAR},
+      f_modified_time = #{record.fModifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyc.transactionpropagate.model.AccSign" >
+    update t_acc_account_sign
+    <set >
+      <if test="fAccountSignCode != null" >
+        f_account_sign_code = #{fAccountSignCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountCategory != null" >
+        f_account_category = #{fAccountCategory,jdbcType=TINYINT},
+      </if>
+      <if test="fAccountSignName != null" >
+        f_account_sign_name = #{fAccountSignName,jdbcType=VARCHAR},
+      </if>
+      <if test="fDescription != null" >
+        f_description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreateBy != null" >
+        f_create_by = #{fCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatedTime != null" >
+        f_created_time = #{fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fModifiedBy != null" >
+        f_modified_by = #{fModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fModifiedTime != null" >
+        f_modified_time = #{fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyc.transactionpropagate.model.AccSign" >
+    update t_acc_account_sign
+    set f_account_sign_code = #{fAccountSignCode,jdbcType=CHAR},
+      f_account_category = #{fAccountCategory,jdbcType=TINYINT},
+      f_account_sign_name = #{fAccountSignName,jdbcType=VARCHAR},
+      f_description = #{fDescription,jdbcType=VARCHAR},
+      f_create_by = #{fCreateBy,jdbcType=VARCHAR},
+      f_created_time = #{fCreatedTime,jdbcType=TIMESTAMP},
+      f_modified_by = #{fModifiedBy,jdbcType=VARCHAR},
+      f_modified_time = #{fModifiedTime,jdbcType=TIMESTAMP}
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyc.transactionpropagate.dao.AccTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.zyc.transactionpropagate.model.AccTemplate" >
+    <id column="f_id" property="fId" jdbcType="BIGINT" />
+    <result column="f_template_code" property="fTemplateCode" jdbcType="CHAR" />
+    <result column="f_description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="f_currency" property="fCurrency" jdbcType="CHAR" />
+    <result column="f_account_sign_code" property="fAccountSignCode" jdbcType="CHAR" />
+    <result column="f_account_name" property="fAccountName" jdbcType="CHAR" />
+    <result column="f_accounting_entry_code" property="fAccountingEntryCode" jdbcType="CHAR" />
+    <result column="f_accounting_direction" property="fAccountingDirection" jdbcType="TINYINT" />
+    <result column="f_accounting_set" property="fAccountingSet" jdbcType="TINYINT" />
+    <result column="f_member_no_type" property="fMemberNoType" jdbcType="TINYINT" />
+    <result column="f_bear_interest" property="fBearInterest" jdbcType="TINYINT" />
+    <result column="f_allow_income" property="fAllowIncome" jdbcType="TINYINT" />
+    <result column="f_allow_outcome" property="fAllowOutcome" jdbcType="TINYINT" />
+    <result column="f_allow_overdraw" property="fAllowOverdraw" jdbcType="TINYINT" />
+    <result column="f_allow_freeze" property="fAllowFreeze" jdbcType="TINYINT" />
+    <result column="f_visible" property="fVisible" jdbcType="TINYINT" />
+    <result column="f_create_by" property="fCreateBy" jdbcType="VARCHAR" />
+    <result column="f_created_time" property="fCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="f_modified_by" property="fModifiedBy" jdbcType="VARCHAR" />
+    <result column="f_modified_time" property="fModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    f_id, f_template_code, f_description, f_currency, f_account_sign_code, f_account_name, 
+    f_accounting_entry_code, f_accounting_direction, f_accounting_set, f_member_no_type, 
+    f_bear_interest, f_allow_income, f_allow_outcome, f_allow_overdraw, f_allow_freeze, 
+    f_visible, f_create_by, f_created_time, f_modified_by, f_modified_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyc.transactionpropagate.model.AccTemplateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_acc_account_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_acc_account_template
+    where f_id = #{fId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_acc_account_template
+    where f_id = #{fId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyc.transactionpropagate.model.AccTemplateExample" >
+    delete from t_acc_account_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyc.transactionpropagate.model.AccTemplate" >
+    insert into t_acc_account_template (f_id, f_template_code, f_description, 
+      f_currency, f_account_sign_code, f_account_name, 
+      f_accounting_entry_code, f_accounting_direction, 
+      f_accounting_set, f_member_no_type, f_bear_interest, 
+      f_allow_income, f_allow_outcome, f_allow_overdraw, 
+      f_allow_freeze, f_visible, f_create_by, 
+      f_created_time, f_modified_by, f_modified_time
+      )
+    values (#{fId,jdbcType=BIGINT}, #{fTemplateCode,jdbcType=CHAR}, #{fDescription,jdbcType=VARCHAR}, 
+      #{fCurrency,jdbcType=CHAR}, #{fAccountSignCode,jdbcType=CHAR}, #{fAccountName,jdbcType=CHAR}, 
+      #{fAccountingEntryCode,jdbcType=CHAR}, #{fAccountingDirection,jdbcType=TINYINT}, 
+      #{fAccountingSet,jdbcType=TINYINT}, #{fMemberNoType,jdbcType=TINYINT}, #{fBearInterest,jdbcType=TINYINT}, 
+      #{fAllowIncome,jdbcType=TINYINT}, #{fAllowOutcome,jdbcType=TINYINT}, #{fAllowOverdraw,jdbcType=TINYINT}, 
+      #{fAllowFreeze,jdbcType=TINYINT}, #{fVisible,jdbcType=TINYINT}, #{fCreateBy,jdbcType=VARCHAR}, 
+      #{fCreatedTime,jdbcType=TIMESTAMP}, #{fModifiedBy,jdbcType=VARCHAR}, #{fModifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyc.transactionpropagate.model.AccTemplate" >
+    insert into t_acc_account_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        f_id,
+      </if>
+      <if test="fTemplateCode != null" >
+        f_template_code,
+      </if>
+      <if test="fDescription != null" >
+        f_description,
+      </if>
+      <if test="fCurrency != null" >
+        f_currency,
+      </if>
+      <if test="fAccountSignCode != null" >
+        f_account_sign_code,
+      </if>
+      <if test="fAccountName != null" >
+        f_account_name,
+      </if>
+      <if test="fAccountingEntryCode != null" >
+        f_accounting_entry_code,
+      </if>
+      <if test="fAccountingDirection != null" >
+        f_accounting_direction,
+      </if>
+      <if test="fAccountingSet != null" >
+        f_accounting_set,
+      </if>
+      <if test="fMemberNoType != null" >
+        f_member_no_type,
+      </if>
+      <if test="fBearInterest != null" >
+        f_bear_interest,
+      </if>
+      <if test="fAllowIncome != null" >
+        f_allow_income,
+      </if>
+      <if test="fAllowOutcome != null" >
+        f_allow_outcome,
+      </if>
+      <if test="fAllowOverdraw != null" >
+        f_allow_overdraw,
+      </if>
+      <if test="fAllowFreeze != null" >
+        f_allow_freeze,
+      </if>
+      <if test="fVisible != null" >
+        f_visible,
+      </if>
+      <if test="fCreateBy != null" >
+        f_create_by,
+      </if>
+      <if test="fCreatedTime != null" >
+        f_created_time,
+      </if>
+      <if test="fModifiedBy != null" >
+        f_modified_by,
+      </if>
+      <if test="fModifiedTime != null" >
+        f_modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=BIGINT},
+      </if>
+      <if test="fTemplateCode != null" >
+        #{fTemplateCode,jdbcType=CHAR},
+      </if>
+      <if test="fDescription != null" >
+        #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCurrency != null" >
+        #{fCurrency,jdbcType=CHAR},
+      </if>
+      <if test="fAccountSignCode != null" >
+        #{fAccountSignCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountName != null" >
+        #{fAccountName,jdbcType=CHAR},
+      </if>
+      <if test="fAccountingEntryCode != null" >
+        #{fAccountingEntryCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountingDirection != null" >
+        #{fAccountingDirection,jdbcType=TINYINT},
+      </if>
+      <if test="fAccountingSet != null" >
+        #{fAccountingSet,jdbcType=TINYINT},
+      </if>
+      <if test="fMemberNoType != null" >
+        #{fMemberNoType,jdbcType=TINYINT},
+      </if>
+      <if test="fBearInterest != null" >
+        #{fBearInterest,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowIncome != null" >
+        #{fAllowIncome,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowOutcome != null" >
+        #{fAllowOutcome,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowOverdraw != null" >
+        #{fAllowOverdraw,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowFreeze != null" >
+        #{fAllowFreeze,jdbcType=TINYINT},
+      </if>
+      <if test="fVisible != null" >
+        #{fVisible,jdbcType=TINYINT},
+      </if>
+      <if test="fCreateBy != null" >
+        #{fCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatedTime != null" >
+        #{fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fModifiedBy != null" >
+        #{fModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fModifiedTime != null" >
+        #{fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyc.transactionpropagate.model.AccTemplateExample" resultType="java.lang.Integer" >
+    select count(*) from t_acc_account_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_acc_account_template
+    <set >
+      <if test="record.fId != null" >
+        f_id = #{record.fId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fTemplateCode != null" >
+        f_template_code = #{record.fTemplateCode,jdbcType=CHAR},
+      </if>
+      <if test="record.fDescription != null" >
+        f_description = #{record.fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCurrency != null" >
+        f_currency = #{record.fCurrency,jdbcType=CHAR},
+      </if>
+      <if test="record.fAccountSignCode != null" >
+        f_account_sign_code = #{record.fAccountSignCode,jdbcType=CHAR},
+      </if>
+      <if test="record.fAccountName != null" >
+        f_account_name = #{record.fAccountName,jdbcType=CHAR},
+      </if>
+      <if test="record.fAccountingEntryCode != null" >
+        f_accounting_entry_code = #{record.fAccountingEntryCode,jdbcType=CHAR},
+      </if>
+      <if test="record.fAccountingDirection != null" >
+        f_accounting_direction = #{record.fAccountingDirection,jdbcType=TINYINT},
+      </if>
+      <if test="record.fAccountingSet != null" >
+        f_accounting_set = #{record.fAccountingSet,jdbcType=TINYINT},
+      </if>
+      <if test="record.fMemberNoType != null" >
+        f_member_no_type = #{record.fMemberNoType,jdbcType=TINYINT},
+      </if>
+      <if test="record.fBearInterest != null" >
+        f_bear_interest = #{record.fBearInterest,jdbcType=TINYINT},
+      </if>
+      <if test="record.fAllowIncome != null" >
+        f_allow_income = #{record.fAllowIncome,jdbcType=TINYINT},
+      </if>
+      <if test="record.fAllowOutcome != null" >
+        f_allow_outcome = #{record.fAllowOutcome,jdbcType=TINYINT},
+      </if>
+      <if test="record.fAllowOverdraw != null" >
+        f_allow_overdraw = #{record.fAllowOverdraw,jdbcType=TINYINT},
+      </if>
+      <if test="record.fAllowFreeze != null" >
+        f_allow_freeze = #{record.fAllowFreeze,jdbcType=TINYINT},
+      </if>
+      <if test="record.fVisible != null" >
+        f_visible = #{record.fVisible,jdbcType=TINYINT},
+      </if>
+      <if test="record.fCreateBy != null" >
+        f_create_by = #{record.fCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCreatedTime != null" >
+        f_created_time = #{record.fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fModifiedBy != null" >
+        f_modified_by = #{record.fModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fModifiedTime != null" >
+        f_modified_time = #{record.fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_acc_account_template
+    set f_id = #{record.fId,jdbcType=BIGINT},
+      f_template_code = #{record.fTemplateCode,jdbcType=CHAR},
+      f_description = #{record.fDescription,jdbcType=VARCHAR},
+      f_currency = #{record.fCurrency,jdbcType=CHAR},
+      f_account_sign_code = #{record.fAccountSignCode,jdbcType=CHAR},
+      f_account_name = #{record.fAccountName,jdbcType=CHAR},
+      f_accounting_entry_code = #{record.fAccountingEntryCode,jdbcType=CHAR},
+      f_accounting_direction = #{record.fAccountingDirection,jdbcType=TINYINT},
+      f_accounting_set = #{record.fAccountingSet,jdbcType=TINYINT},
+      f_member_no_type = #{record.fMemberNoType,jdbcType=TINYINT},
+      f_bear_interest = #{record.fBearInterest,jdbcType=TINYINT},
+      f_allow_income = #{record.fAllowIncome,jdbcType=TINYINT},
+      f_allow_outcome = #{record.fAllowOutcome,jdbcType=TINYINT},
+      f_allow_overdraw = #{record.fAllowOverdraw,jdbcType=TINYINT},
+      f_allow_freeze = #{record.fAllowFreeze,jdbcType=TINYINT},
+      f_visible = #{record.fVisible,jdbcType=TINYINT},
+      f_create_by = #{record.fCreateBy,jdbcType=VARCHAR},
+      f_created_time = #{record.fCreatedTime,jdbcType=TIMESTAMP},
+      f_modified_by = #{record.fModifiedBy,jdbcType=VARCHAR},
+      f_modified_time = #{record.fModifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyc.transactionpropagate.model.AccTemplate" >
+    update t_acc_account_template
+    <set >
+      <if test="fTemplateCode != null" >
+        f_template_code = #{fTemplateCode,jdbcType=CHAR},
+      </if>
+      <if test="fDescription != null" >
+        f_description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCurrency != null" >
+        f_currency = #{fCurrency,jdbcType=CHAR},
+      </if>
+      <if test="fAccountSignCode != null" >
+        f_account_sign_code = #{fAccountSignCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountName != null" >
+        f_account_name = #{fAccountName,jdbcType=CHAR},
+      </if>
+      <if test="fAccountingEntryCode != null" >
+        f_accounting_entry_code = #{fAccountingEntryCode,jdbcType=CHAR},
+      </if>
+      <if test="fAccountingDirection != null" >
+        f_accounting_direction = #{fAccountingDirection,jdbcType=TINYINT},
+      </if>
+      <if test="fAccountingSet != null" >
+        f_accounting_set = #{fAccountingSet,jdbcType=TINYINT},
+      </if>
+      <if test="fMemberNoType != null" >
+        f_member_no_type = #{fMemberNoType,jdbcType=TINYINT},
+      </if>
+      <if test="fBearInterest != null" >
+        f_bear_interest = #{fBearInterest,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowIncome != null" >
+        f_allow_income = #{fAllowIncome,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowOutcome != null" >
+        f_allow_outcome = #{fAllowOutcome,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowOverdraw != null" >
+        f_allow_overdraw = #{fAllowOverdraw,jdbcType=TINYINT},
+      </if>
+      <if test="fAllowFreeze != null" >
+        f_allow_freeze = #{fAllowFreeze,jdbcType=TINYINT},
+      </if>
+      <if test="fVisible != null" >
+        f_visible = #{fVisible,jdbcType=TINYINT},
+      </if>
+      <if test="fCreateBy != null" >
+        f_create_by = #{fCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatedTime != null" >
+        f_created_time = #{fCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fModifiedBy != null" >
+        f_modified_by = #{fModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="fModifiedTime != null" >
+        f_modified_time = #{fModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyc.transactionpropagate.model.AccTemplate" >
+    update t_acc_account_template
+    set f_template_code = #{fTemplateCode,jdbcType=CHAR},
+      f_description = #{fDescription,jdbcType=VARCHAR},
+      f_currency = #{fCurrency,jdbcType=CHAR},
+      f_account_sign_code = #{fAccountSignCode,jdbcType=CHAR},
+      f_account_name = #{fAccountName,jdbcType=CHAR},
+      f_accounting_entry_code = #{fAccountingEntryCode,jdbcType=CHAR},
+      f_accounting_direction = #{fAccountingDirection,jdbcType=TINYINT},
+      f_accounting_set = #{fAccountingSet,jdbcType=TINYINT},
+      f_member_no_type = #{fMemberNoType,jdbcType=TINYINT},
+      f_bear_interest = #{fBearInterest,jdbcType=TINYINT},
+      f_allow_income = #{fAllowIncome,jdbcType=TINYINT},
+      f_allow_outcome = #{fAllowOutcome,jdbcType=TINYINT},
+      f_allow_overdraw = #{fAllowOverdraw,jdbcType=TINYINT},
+      f_allow_freeze = #{fAllowFreeze,jdbcType=TINYINT},
+      f_visible = #{fVisible,jdbcType=TINYINT},
+      f_create_by = #{fCreateBy,jdbcType=VARCHAR},
+      f_created_time = #{fCreatedTime,jdbcType=TIMESTAMP},
+      f_modified_by = #{fModifiedBy,jdbcType=VARCHAR},
+      f_modified_time = #{fModifiedTime,jdbcType=TIMESTAMP}
+    where f_id = #{fId,jdbcType=BIGINT}
+  </update>
+</mapper>
